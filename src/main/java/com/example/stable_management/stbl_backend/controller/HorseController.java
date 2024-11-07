@@ -1,43 +1,46 @@
 package com.example.stable_management.stbl_backend.controller;
 
+
+import com.example.stable_management.stbl_backend.dto.HorseRequestDto;
 import com.example.stable_management.stbl_backend.entities.Horse;
-import com.example.stable_management.stbl_backend.repositories.HorseRepository;
+import com.example.stable_management.stbl_backend.entities.Tenant;
+import com.example.stable_management.stbl_backend.services.HorseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Service
 @RestController
+@RequestMapping("/horses")
 public class HorseController {
 
+    private final HorseService horseService;
+
     @Autowired
-    private HorseRepository horseRepository;
-
-
-    @PostMapping("/horses/create")
-    public String createHorse(@RequestBody Horse horse) {
-        horseRepository.save(horse);
-        return "Horse created...";
+    public HorseController(HorseService horseService) {
+        this.horseService = horseService;
     }
 
-    @PutMapping("/horses/update")
-    public Horse updateHorse(Horse updatedHorse) {
-        return horseRepository.save(updatedHorse);
+    @GetMapping
+    public List<HorseRequestDto> getAllHorses() {
+        return horseService.getAllHorses();
     }
 
-    @GetMapping("/horses")
-    public List<Horse> getAllHorses() {
-        return horseRepository.findAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<HorseRequestDto> getHorseById(@PathVariable Long id) {
+        return ResponseEntity.ok(horseService.getHorseById(id));
     }
 
-    @GetMapping("/horses/{id}")
-    public Horse getHorseById(@PathVariable Integer id){
-        return horseRepository.findById(id).orElse(null);
+    @PostMapping
+    public Horse createHorse(@RequestBody Horse horse) {
+        return horseService.createHorse(horse);
     }
 
-
+    @PutMapping("/{horseId}/tenants/{tenantId}")
+    public Horse assignHorseToTenant(@PathVariable Long tenantId, @PathVariable Long horseId) {
+        return horseService.assignTenantToHorse(tenantId, horseId);
+    }
 }
 
 

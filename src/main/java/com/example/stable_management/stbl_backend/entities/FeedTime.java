@@ -6,55 +6,34 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "feed_time")
 public class FeedTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "feed_time_id")
-    private Integer feedTimeId;
+    private Long id;
 
-    @Column(name = "name")
-    private String time;
-
-    @OneToMany(mappedBy = "feedTime")
-    private Set<FeedSchedule> feedSchedules = new HashSet<>();
-
-    // CONSTRUCTORS
-    public FeedTime() {}
+    private String timeExpression;
 
     // GETTER
-    public Set<FeedSchedule> getFeedSchedules() {
-        return feedSchedules;
+    public Long getId() {
+        return id;
     }
 
-    public Integer getFeedTimeId() {
-        return feedTimeId;
-    }
-
-    public String getTime() {
-        return time;
+    public String getTimeExpression() {
+        return timeExpression;
     }
 
 
     // SETTER
-    public void setFeedSchedules(Set<FeedSchedule> feedSchedules) {
-        this.feedSchedules = feedSchedules;
-    }
-
-    public void setFeedTimeId(Integer feedTimeId) {
-        this.feedTimeId = feedTimeId;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimeExpression(String timeExpression) {
+        this.timeExpression = timeExpression;
     }
 
     @Override
     public String toString() {
         return "FeedTime{" +
-                "feedTimeId=" + feedTimeId +
-                ", time='" + time + '\'' +
+                "feedTimeId=" + id +
+                ", time='" + timeExpression + '\'' +
                 '}';
     }
 }
