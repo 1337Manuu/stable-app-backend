@@ -1,9 +1,7 @@
 package com.example.stable_management.stbl_backend.services;
 
-import com.example.stable_management.stbl_backend.dto.TenantRequestDto;
-import com.example.stable_management.stbl_backend.entities.Horse;
+import com.example.stable_management.stbl_backend.dtos.tenant_dto.TenantDto;
 import com.example.stable_management.stbl_backend.entities.Tenant;
-import com.example.stable_management.stbl_backend.repositories.HorseRepository;
 import com.example.stable_management.stbl_backend.repositories.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,41 +13,30 @@ import java.util.stream.Collectors;
 public class TenantService {
 
     private final TenantRepository tenantRepository;
-    private final HorseRepository horseRepository;
 
     @Autowired
-    public TenantService(TenantRepository tenantRepository, HorseRepository horseRepository) {
+    public TenantService(TenantRepository tenantRepository) {
         this.tenantRepository = tenantRepository;
-        this.horseRepository = horseRepository;
     }
 
-    public List<TenantRequestDto> getAllTenants() {
+    public List<TenantDto> getAllTenants() {
         return tenantRepository.findAll().
                 stream()
-                .map(tenant -> new TenantRequestDto(
-                        tenant.getName(),
-                        tenant.getPhone(),
-                        tenant.getHorses()
-                                .stream()
-                                .map(Horse::getName)
-                                .collect(Collectors.toList())))
+                .map(TenantDto::getDto)
                 .collect(Collectors.toList());
     }
 
-    public TenantRequestDto getTenantById(Long id) {
+    public TenantDto getTenantById(Long id) {
         return tenantRepository.findById(id)
-                .map(tenant -> new TenantRequestDto(
-                        tenant.getName(),
-                        tenant.getPhone(),
-                        tenant.getHorses()
-                                .stream()
-                                .map(Horse::getName)
-                                .collect(Collectors.toList())
-                )).orElse(null);
+                .map(TenantDto::getDto).orElse(null);
     }
 
-    public Tenant createTenant(Tenant tenant) {
-        return tenantRepository.save(tenant);
+    public TenantDto createTenant(TenantDto tenantDto) {
+        Tenant tenant = new Tenant();
+        tenant.setName(tenantDto.name());
+        tenant.setPhone(tenantDto.phone());
+        tenantRepository.save(tenant);
+        return TenantDto.getDto(tenant);
     }
 
 }

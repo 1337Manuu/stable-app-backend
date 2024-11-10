@@ -20,6 +20,10 @@ public class Tenant {
     @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER)
     private Set<Horse> horses = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER)
+    private Set<HallBooking> hallBookings = new HashSet<>();
+
     @Setter
     private String name;
 
