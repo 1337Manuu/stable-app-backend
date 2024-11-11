@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public record HallBookingDto(Long id,
+                             String name,
                              LocalDateTime startTime,
                              LocalDateTime endTime,
                              TenantDtoForHallBookingRequest tenantDto) {
@@ -15,6 +16,7 @@ public record HallBookingDto(Long id,
         if (hallBooking == null) {return null;}
         return HallBookingDto.builder()
                 .id(hallBooking.getId())
+                .name(hallBooking.getName())
                 .startTime(hallBooking.getStartTime())
                 .endTime(hallBooking.getEndTime())
                 .tenantDto(TenantDtoForHallBookingRequest.getDto(hallBooking.getTenant()))

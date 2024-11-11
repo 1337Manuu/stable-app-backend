@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"feed_schedule_id", "timeExpression"})})
 public class FeedTime {
 
     @Id
@@ -15,6 +16,10 @@ public class FeedTime {
 
     @Setter
     private String timeExpression;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "feed_schedule_id", referencedColumnName = "id")
+    private FeedSchedule feedSchedule;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feed_serving_size_id", referencedColumnName = "id")
@@ -30,5 +35,9 @@ public class FeedTime {
 
     public void assignFeedType(FeedType feedType) {
         this.feedType = feedType;
+    }
+
+    public void assignFeedSchedule(FeedSchedule feedSchedule) {
+        this.feedSchedule = feedSchedule;
     }
 }

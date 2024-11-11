@@ -15,6 +15,9 @@ public class HallBooking {
     private Long id;
 
     @Setter
+    private String name;
+
+    @Setter
     private LocalDateTime startTime;
 
     @Setter

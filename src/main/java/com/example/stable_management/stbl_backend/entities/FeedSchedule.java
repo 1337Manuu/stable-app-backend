@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Entity
 public class FeedSchedule {
@@ -20,9 +23,8 @@ public class FeedSchedule {
     private Horse horse;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "feed_serving_size_id", referencedColumnName = "id")
-    private FeedServingSize feedServingSize;
+    @OneToMany(mappedBy = "feedSchedule", fetch = FetchType.EAGER)
+    private Set<FeedTime> feedTimes = new HashSet<>();
 
     public void setHorse(Horse horse) {
         this.horse = horse;

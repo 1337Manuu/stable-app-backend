@@ -43,7 +43,9 @@ public class StallService {
                 .orElse(null);
     }
 
-    public StallDto createStall(Stall stall) {
+    public StallDto createStall(StallDto stallDto) {
+        Stall stall = new Stall();
+        stall.setName(stallDto.name());
         stallRepository.save(stall);
         return StallDto.getDto(stall);
     }

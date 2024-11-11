@@ -39,6 +39,7 @@ public class HallBookingService {
 
     public HallBookingDto createHallBooking(HallBookingDto hallBookingDto) {
         HallBooking hallBooking = new HallBooking();
+        hallBooking.setName(hallBookingDto.name());
         hallBooking.setStartTime(hallBookingDto.startTime());
         hallBooking.setEndTime(hallBookingDto.endTime());
         HallBooking savedHallBooking = hallBookingRepository.save(hallBooking);

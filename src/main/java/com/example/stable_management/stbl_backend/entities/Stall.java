@@ -13,6 +13,9 @@ public class Stall {
     private Long id;
 
     @Setter
+    private String name;
+
+    @Setter
     private Boolean isOccupied;
 
     @OneToOne(cascade = CascadeType.ALL)

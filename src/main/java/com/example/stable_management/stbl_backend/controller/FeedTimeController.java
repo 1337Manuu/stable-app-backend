@@ -38,13 +38,19 @@ public class FeedTimeController {
 
     @PutMapping("/{feedTimeId}/feed-serving-sizes/{feedServingSizeId}")
     public ResponseEntity<FeedTimeDto> assignFeedServingSizeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedServingSizeId) {
-        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedServiceToFeedTime(feedTimeId, feedServingSizeId);
+        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedServingSizeToFeedTime(feedTimeId, feedServingSizeId);
         return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
     }
 
     @PutMapping("/{feedTimeId}/feed-types/{feedTypeId}")
     public ResponseEntity<FeedTimeDto> assignFeedTypeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedTypeId) {
         FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedTypeToFeedTime(feedTimeId, feedTypeId);
+        return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/{feedTimeId}/feed-schedules/{feedScheduleId}")
+    public ResponseEntity<FeedTimeDto> assignFeedScheduleToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedScheduleId) {
+        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedScheduleToFeedTime(feedTimeId, feedScheduleId);
         return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
     }
 }

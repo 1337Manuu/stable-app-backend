@@ -7,12 +7,14 @@ import lombok.Builder;
 @Builder
 public record StallDtoForHorseRequest(
         Long id,
+        String name,
         StallLocationDtoForStallRequest stallLocationDto
 ) {
     public static StallDtoForHorseRequest getDto(Stall stall) {
         if (stall == null) return null;
         return StallDtoForHorseRequest.builder()
                 .id(stall.getId())
+                .name(stall.getName())
                 .stallLocationDto(StallLocationDtoForStallRequest.getDto(stall.getStallLocation()))
                 .build();
     }

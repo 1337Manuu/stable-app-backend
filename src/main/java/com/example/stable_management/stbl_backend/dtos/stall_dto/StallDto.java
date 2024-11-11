@@ -8,6 +8,7 @@ import lombok.Builder;
 @Builder
 public record StallDto(
         Long id,
+        String name,
         boolean isOccupied,
         HorseDtoForStallRequest horseDto,
         StallLocationDtoForStallRequest stallLocationDto) {
@@ -16,6 +17,7 @@ public record StallDto(
         if (stall.getIsOccupied() == null) stall.setOccupancyStatus();
         return StallDto.builder()
                 .id(stall.getId())
+                .name(stall.getName())
                 .isOccupied(stall.getIsOccupied())
                 .horseDto(HorseDtoForStallRequest.getDto(stall.getHorse()))
                 .stallLocationDto(StallLocationDtoForStallRequest.getDto(stall.getStallLocation()))

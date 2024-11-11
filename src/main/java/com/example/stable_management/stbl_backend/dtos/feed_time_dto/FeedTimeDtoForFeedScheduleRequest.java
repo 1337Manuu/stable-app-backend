@@ -1,25 +1,22 @@
 package com.example.stable_management.stbl_backend.dtos.feed_time_dto;
 
-import com.example.stable_management.stbl_backend.dtos.feed_schedule_dto.FeedScheduleDto;
 import com.example.stable_management.stbl_backend.dtos.feed_serving_size_dto.FeedServingSizeDto;
 import com.example.stable_management.stbl_backend.dtos.feed_type_dto.FeedTypeDto;
 import com.example.stable_management.stbl_backend.entities.FeedTime;
 import lombok.Builder;
 
 @Builder
-public record FeedTimeDto(
+public record FeedTimeDtoForFeedScheduleRequest(
         Long id,
         String timeExpression,
-        FeedScheduleDto feedScheduleDto,
         FeedServingSizeDto servingSizeDto,
         FeedTypeDto feedTypeDto
 ) {
-    public static FeedTimeDto getDto(FeedTime feedTime){
+    public static FeedTimeDtoForFeedScheduleRequest getDto(FeedTime feedTime){
         if (feedTime == null) return null;
-        return FeedTimeDto.builder()
+        return FeedTimeDtoForFeedScheduleRequest.builder()
                 .id(feedTime.getId())
                 .timeExpression(feedTime.getTimeExpression())
-                .feedScheduleDto(FeedScheduleDto.getDto(feedTime.getFeedSchedule()))
                 .servingSizeDto(FeedServingSizeDto.getDto(feedTime.getFeedServingSize()))
                 .feedTypeDto(FeedTypeDto.getDto(feedTime.getFeedType()))
                 .build();

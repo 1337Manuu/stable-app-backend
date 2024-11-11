@@ -46,7 +46,6 @@ public class HorseController {
     }
 
 
-    //TODO: fix FeedSchedule to Horse assignment.
     @PutMapping("/{horseId}/feed-schedules/{feedScheduleId}")
     public ResponseEntity<HorseDto> assignFeedScheduleToHorse(@PathVariable Long horseId, @PathVariable Long feedScheduleId) {
         HorseDto updatedHorse = horseService.assignFeedScheduleToHorse(horseId, feedScheduleId);
