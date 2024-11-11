@@ -17,6 +17,10 @@ public record StallLocationDto(
         return builder()
                 .id(stallLocation.getId())
                 .name(stallLocation.getName())
+                .stallDtoList(stallLocation.getStalls()
+                        .stream()
+                        .map(StallDtoForStallLocationRequest::getDto)
+                        .toList())
                 .build();
     }
 }

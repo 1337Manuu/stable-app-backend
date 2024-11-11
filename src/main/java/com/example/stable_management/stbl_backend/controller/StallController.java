@@ -39,6 +39,7 @@ public class StallController {
         return stallService.assignHorseToStall(horseId, stallId);
     }
 
+    //TODO: fix Stall to Stall Location assignment
     @PutMapping("/{stallId}/stall-locations/{stallLocationId}")
     public StallDto assignStallToLocation(@PathVariable Long stallId, @PathVariable Long stallLocationId) {
         return stallService.assignStallToStallLocation(stallId, stallLocationId);

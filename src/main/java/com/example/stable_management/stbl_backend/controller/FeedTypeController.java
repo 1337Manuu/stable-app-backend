@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/feed-type")
+@RequestMapping("/feed-types")
 public class FeedTypeController {
 
     private final FeedTypeService feedTypeService;
@@ -31,7 +31,7 @@ public class FeedTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedTypeDto> createFeedType(FeedTypeDto feedTypeDto) {
+    public ResponseEntity<FeedTypeDto> createFeedType(@RequestBody FeedTypeDto feedTypeDto) {
         FeedTypeDto createdFeedTypeDto = feedTypeService.createFeedType(feedTypeDto);
         return new ResponseEntity<>(createdFeedTypeDto, HttpStatus.CREATED);
     }

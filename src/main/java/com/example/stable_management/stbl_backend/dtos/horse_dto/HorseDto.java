@@ -20,6 +20,7 @@ public record HorseDto(
                 .name(horse.getName())
                 .tenantDto(TenantDtoForHorseRequest.getDto(horse.getTenant()))
                 .stallDto(StallDtoForHorseRequest.getDto(horse.getStall()))
+                .feedScheduleDto(FeedScheduleDtoForHorseRequest.getDto(horse.getFeedSchedule()))
                 .build();
 
     }

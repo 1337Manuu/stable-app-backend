@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/feed-time")
+@RequestMapping("/feed-times")
 public class FeedTimeController {
 
     private final FeedTimeService feedTimeService;
@@ -34,5 +34,17 @@ public class FeedTimeController {
     public ResponseEntity<FeedTimeDto> createFeedTime(@RequestBody FeedTimeDto feedTimeDto) {
         FeedTimeDto createdFeedTimeDto = feedTimeService.createFeedTime(feedTimeDto);
         return new ResponseEntity<>(createdFeedTimeDto, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{feedTimeId}/feed-serving-sizes/{feedServingSizeId}")
+    public ResponseEntity<FeedTimeDto> assignFeedServingSizeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedServingSizeId) {
+        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedServiceToFeedTime(feedTimeId, feedServingSizeId);
+        return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/{feedTimeId}/feed-types/{feedTypeId}")
+    public ResponseEntity<FeedTimeDto> assignFeedTypeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedTypeId) {
+        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedTypeToFeedTime(feedTimeId, feedTypeId);
+        return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,9 +18,12 @@ public class FeedSchedule {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "horse_id", referencedColumnName = "id")
     private Horse horse;
-    // MANY FeedSchedules can have MANY FeedTimes, but each FeedTime must be UNIQUE
-    // ONE FeedSchedule can have ONE FeedServingSize and ONE FeedServingSize can have MANY FeedSchedules
-    // ONE FeedSchedule can have ONE FeedType and ONE FeedType can have MANY FeedSchedules
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "feed_serving_size_id", referencedColumnName = "id")
+    private FeedServingSize feedServingSize;
+
     public void setHorse(Horse horse) {
         this.horse = horse;
 

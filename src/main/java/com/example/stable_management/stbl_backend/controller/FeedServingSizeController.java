@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/feed-serving-size")
+@RequestMapping("/feed-serving-sizes")
 public class FeedServingSizeController {
 
     private final FeedServingSizeService feedServingSizeService;
@@ -38,5 +38,4 @@ public class FeedServingSizeController {
         FeedServingSizeDto createdFeedServingSizeDto = feedServingSizeService.createFeedServingSize(feedServingSizeDto);
         return new ResponseEntity<>(createdFeedServingSizeDto, HttpStatus.CREATED);
     }
-
 }

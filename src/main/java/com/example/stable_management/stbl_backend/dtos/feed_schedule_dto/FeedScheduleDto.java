@@ -15,6 +15,7 @@ public record FeedScheduleDto(
         return FeedScheduleDto.builder()
                 .id(feedSchedule.getId())
                 .note(feedSchedule.getNote())
+                .horseDto(HorseDtoForFeedScheduleRequest.getDto(feedSchedule.getHorse()))
                 .build();
     }
 }

@@ -4,16 +4,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Entity
 public class FeedServingSize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
+    private Long id;
 
     @Setter
-    String name;
+    private String name;
+
+    @OneToMany(mappedBy = "feedServingSize", fetch = FetchType.EAGER)
+    private Set<FeedTime> feedTimes = new HashSet<>();
 
 
 }
