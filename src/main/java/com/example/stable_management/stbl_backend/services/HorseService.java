@@ -1,7 +1,5 @@
 package com.example.stable_management.stbl_backend.services;
 
-import com.example.stable_management.stbl_backend.dtos.horse_dto.HorseDto;
-import com.example.stable_management.stbl_backend.dtos.tenant_dto.TenantDto;
 import com.example.stable_management.stbl_backend.entities.FeedSchedule;
 import com.example.stable_management.stbl_backend.entities.Horse;
 import com.example.stable_management.stbl_backend.entities.Tenant;
@@ -21,53 +19,44 @@ public class HorseService {
     private final HorseRepository horseRepository;
     private final TenantRepository tenantRepository;
     private final FeedScheduleRepository feedScheduleRepository;
+    private final TenantService tenantService;
 
-    public HorseService(HorseRepository horseRepository, TenantRepository tenantRepository, FeedScheduleRepository feedScheduleRepository) {
+    public HorseService(HorseRepository horseRepository, TenantRepository tenantRepository, FeedScheduleRepository feedScheduleRepository, TenantService tenantService) {
         this.horseRepository = horseRepository;
         this.tenantRepository = tenantRepository;
         this.feedScheduleRepository = feedScheduleRepository;
+        this.tenantService = tenantService;
     }
 
-    public List<HorseDto> getAllHorses() {
-        return horseRepository.findAll()
-                .stream()
-                .map(HorseDto::getDto)
-                .collect(Collectors.toList());
+    public List<Horse> getAllHorses() {
+        return horseRepository.findAll();
     }
 
-    public HorseDto getHorseById(Long id) {
-        return horseRepository.findById(id)
-                .map(HorseDto::getDto)
-                .orElse(null);
+    public Horse getHorseById(Long id) {
+        return horseRepository.findById(id).orElse(null);
     }
 
-    public HorseDto createHorse(HorseDto horseDto) {
-        Horse horse = new Horse();
-        horse.setName(horseDto.name());
-        TenantDto.getDto(horse.getTenant());
-        horseRepository.save(horse);
-        return HorseDto.getDto(horse);
+    public Horse createHorse(Horse horse) {
+        return horseRepository.save(horse);
     }
 
-    public HorseDto assignHorseToTenant(Long tenantId, Long horseId) {
+    public Horse assignHorseToTenant(Long tenantId, Long horseId) {
         if (horseRepository.findById(horseId).isEmpty() || tenantRepository.findById(tenantId).isEmpty()) {
             throw new NoSuchElementException("Horse or Stall not found");
         }
         Tenant tenant = tenantRepository.findById(tenantId).get();
         Horse horse = horseRepository.findById(horseId).get();
         horse.assignTenant(tenant);
-        horseRepository.save(horse);
-        return HorseDto.getDto(horse);
+        return horseRepository.save(horse);
     }
 
-    public HorseDto assignFeedScheduleToHorse(Long horseId, Long feedScheduleId) {
+    public Horse assignFeedScheduleToHorse(Long horseId, Long feedScheduleId) {
         if (horseRepository.findById(horseId).isEmpty() || feedScheduleRepository.findById(feedScheduleId).isEmpty()) {
             throw new NoSuchElementException("Horse or Feed Schedule not found");
         }
         Horse horse = horseRepository.findById(horseId).get();
         FeedSchedule feedSchedule = feedScheduleRepository.findById(feedScheduleId).get();
         horse.assignFeedSchedule(feedSchedule);
-        horseRepository.save(horse);
-        return HorseDto.getDto(horse);
+        return horseRepository.save(horse);
     }
 }

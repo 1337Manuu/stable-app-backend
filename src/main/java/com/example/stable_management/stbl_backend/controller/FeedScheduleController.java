@@ -1,6 +1,5 @@
 package com.example.stable_management.stbl_backend.controller;
 
-import com.example.stable_management.stbl_backend.dtos.feed_schedule_dto.FeedScheduleDto;
 import com.example.stable_management.stbl_backend.entities.FeedSchedule;
 import com.example.stable_management.stbl_backend.services.FeedScheduleService;
 import org.springframework.http.HttpStatus;
@@ -20,20 +19,17 @@ public class FeedScheduleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FeedScheduleDto>> getFeedSchedule() {
-        List<FeedScheduleDto> feedScheduleDtoList = feedScheduleService.getAllFeedSchedules();
-        return new ResponseEntity<>(feedScheduleDtoList, HttpStatus.OK);
+    public ResponseEntity<List<FeedSchedule>> getFeedSchedule() {
+        return new ResponseEntity<>(feedScheduleService.getAllFeedSchedules(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FeedScheduleDto> getFeedScheduleById(@PathVariable long id) {
-        FeedScheduleDto feedScheduleDto = feedScheduleService.getFeedScheduleById(id);
-        return new ResponseEntity<>(feedScheduleDto, HttpStatus.OK);
+    public ResponseEntity<FeedSchedule> getFeedScheduleById(@PathVariable long id) {
+        return new ResponseEntity<>(feedScheduleService.getFeedScheduleById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<FeedScheduleDto> createFeedSchedule(@RequestBody FeedScheduleDto feedScheduleDto) {
-        FeedScheduleDto createdFeedScheduleDto = feedScheduleService.createFeedSchedule(feedScheduleDto);
-        return new ResponseEntity<>(createdFeedScheduleDto, HttpStatus.CREATED);
+    public ResponseEntity<FeedSchedule> createFeedSchedule(@RequestBody FeedSchedule feedSchedule) {
+        return new ResponseEntity<>(feedScheduleService.createFeedSchedule(feedSchedule), HttpStatus.CREATED);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.stable_management.stbl_backend.services;
 
-import com.example.stable_management.stbl_backend.dtos.feed_time_dto.FeedTimeDto;
 import com.example.stable_management.stbl_backend.entities.FeedSchedule;
 import com.example.stable_management.stbl_backend.entities.FeedServingSize;
 import com.example.stable_management.stbl_backend.entities.FeedTime;
@@ -31,55 +30,45 @@ public class FeedTimeService {
         this.feedScheduleRepository = feedScheduleRepository;
     }
 
-    public List<FeedTimeDto> getAllFeedTimes() {
-        return feedTimeRepository.findAll().stream()
-                .map(FeedTimeDto::getDto)
-                .collect(Collectors.toList());
+    public List<FeedTime> getAllFeedTimes() {
+        return feedTimeRepository.findAll();
     }
 
-    public FeedTimeDto getFeedTimeById(Long id) {
-        return feedTimeRepository.findById(id)
-                .map(FeedTimeDto::getDto)
-                .orElse(null);
+    public FeedTime getFeedTimeById(Long id) {
+        return feedTimeRepository.findById(id).orElse(null);
     }
 
-    public  FeedTimeDto createFeedTime(FeedTimeDto feedTimeDto) {
-        FeedTime feedTime = new FeedTime();
-        feedTime.setTimeExpression(feedTimeDto.timeExpression());
-        feedTimeRepository.save(feedTime);
-        return FeedTimeDto.getDto(feedTime);
+    public  FeedTime createFeedTime(FeedTime feedTime) {
+        return feedTimeRepository.save(feedTime);
     }
 
-    public FeedTimeDto assignFeedServingSizeToFeedTime(Long feedTimeId, Long feedServingSizeId) {
+    public FeedTime assignFeedServingSizeToFeedTime(Long feedTimeId, Long feedServingSizeId) {
         if (feedTimeRepository.findById(feedTimeId).isEmpty() || feedServingSizeRepository.findById(feedServingSizeId).isEmpty()) {
             throw new NoSuchElementException("Feed Time or Feed Serving Size not found");
         };
         FeedTime feedTime = feedTimeRepository.findById(feedTimeId).get();
         FeedServingSize feedServingSize = feedServingSizeRepository.findById(feedServingSizeId).get();
         feedTime.assignFeedServingSize(feedServingSize);
-        feedTimeRepository.save(feedTime);
-        return FeedTimeDto.getDto(feedTime);
+         return feedTimeRepository.save(feedTime);
     }
 
-    public FeedTimeDto assignFeedTypeToFeedTime(Long feedTimeId, Long feedTypeId) {
+    public FeedTime assignFeedTypeToFeedTime(Long feedTimeId, Long feedTypeId) {
         if (feedTimeRepository.findById(feedTimeId).isEmpty() || feedTypeRepository.findById(feedTypeId).isEmpty()) {
             throw new NoSuchElementException("Feed Time or Feed Type not found");
         }
         FeedTime feedTime = feedTimeRepository.findById(feedTimeId).get();
         FeedType feedType = feedTypeRepository.findById(feedTypeId).get();
         feedTime.assignFeedType(feedType);
-        feedTimeRepository.save(feedTime);
-        return FeedTimeDto.getDto(feedTime);
+        return feedTimeRepository.save(feedTime);
     }
 
-    public FeedTimeDto assignFeedScheduleToFeedTime(Long feedTimeId, Long feedScheduleId) {
+    public FeedTime assignFeedScheduleToFeedTime(Long feedTimeId, Long feedScheduleId) {
         if (feedTimeRepository.findById(feedTimeId).isEmpty() || feedScheduleRepository.findById(feedScheduleId).isEmpty()) {
             throw new NoSuchElementException("Feed Time or Feed Schedule not found");
         }
         FeedTime feedTime = feedTimeRepository.findById(feedTimeId).get();
         FeedSchedule feedSchedule = feedScheduleRepository.findById(feedScheduleId).get();
         feedTime.assignFeedSchedule(feedSchedule);
-        feedTimeRepository.save(feedTime);
-        return FeedTimeDto.getDto(feedTime);
+        return feedTimeRepository.save(feedTime);
     }
 }

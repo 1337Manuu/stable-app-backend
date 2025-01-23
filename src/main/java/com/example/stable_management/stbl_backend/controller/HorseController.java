@@ -1,7 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
-
-import com.example.stable_management.stbl_backend.dtos.horse_dto.HorseDto;
+import com.example.stable_management.stbl_backend.entities.Horse;
 import com.example.stable_management.stbl_backend.services.HorseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,33 +21,27 @@ public class HorseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HorseDto>> getAllHorses() {
-        List<HorseDto> horseDtoList = horseService.getAllHorses();
-        return new ResponseEntity<>(horseDtoList, HttpStatus.OK);
+    public ResponseEntity<List<Horse>> getAllHorses() {
+        return new ResponseEntity<>(horseService.getAllHorses(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HorseDto> getHorseById(@PathVariable Long id) {
-        HorseDto horseDto = horseService.getHorseById(id);
-        return new ResponseEntity<>(horseDto, HttpStatus.OK);
+    public ResponseEntity<Horse> getHorseById(@PathVariable Long id) {
+        return new ResponseEntity<>(horseService.getHorseById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<HorseDto> createHorse(@RequestBody HorseDto horseDto) {
-        HorseDto createdHorse = horseService.createHorse(horseDto);
-        return new ResponseEntity<>(createdHorse, HttpStatus.CREATED);
+    public ResponseEntity<Horse> createHorse(@RequestBody Horse horse) {
+        return new ResponseEntity<>(horseService.createHorse(horse), HttpStatus.CREATED);
     }
 
     @PutMapping("/{horseId}/tenants/{tenantId}")
-    public ResponseEntity<HorseDto> assignHorseToTenant(@PathVariable Long tenantId, @PathVariable Long horseId) {
-        HorseDto assignedHorse = horseService.assignHorseToTenant(tenantId, horseId);
-        return new ResponseEntity<>(assignedHorse, HttpStatus.OK);
+    public ResponseEntity<Horse> assignHorseToTenant(@PathVariable Long tenantId, @PathVariable Long horseId) {
+        return new ResponseEntity<>(horseService.assignHorseToTenant(tenantId, horseId), HttpStatus.OK);
     }
 
-
     @PutMapping("/{horseId}/feed-schedules/{feedScheduleId}")
-    public ResponseEntity<HorseDto> assignFeedScheduleToHorse(@PathVariable Long horseId, @PathVariable Long feedScheduleId) {
-        HorseDto updatedHorse = horseService.assignFeedScheduleToHorse(horseId, feedScheduleId);
-        return new ResponseEntity<>(updatedHorse, HttpStatus.OK);
+    public ResponseEntity<Horse> assignFeedScheduleToHorse(@PathVariable Long horseId, @PathVariable Long feedScheduleId) {
+        return new ResponseEntity<>(horseService.assignFeedScheduleToHorse(horseId, feedScheduleId), HttpStatus.OK);
     }
 }

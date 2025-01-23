@@ -1,6 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
-import com.example.stable_management.stbl_backend.dtos.feed_type_dto.FeedTypeDto;
+import com.example.stable_management.stbl_backend.entities.FeedType;
 import com.example.stable_management.stbl_backend.services.FeedTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,20 +19,17 @@ public class FeedTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FeedTypeDto>> getAllFeedTypes() {
-        List<FeedTypeDto> feedTypeDtoList = feedTypeService.getAllFeedTypes();
-        return new ResponseEntity<>(feedTypeDtoList, HttpStatus.OK);
+    public ResponseEntity<List<FeedType>> getAllFeedTypes() {
+        return new ResponseEntity<>(feedTypeService.getAllFeedTypes(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FeedTypeDto> getFeedTypeById(@PathVariable Long id) {
-        FeedTypeDto feedTypeDto = feedTypeService.getFeedTypeById(id);
-        return new ResponseEntity<>(feedTypeDto, HttpStatus.OK);
+    public ResponseEntity<FeedType> getFeedTypeById(@PathVariable Long id) {
+        return new ResponseEntity<>(feedTypeService.getFeedTypeById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<FeedTypeDto> createFeedType(@RequestBody FeedTypeDto feedTypeDto) {
-        FeedTypeDto createdFeedTypeDto = feedTypeService.createFeedType(feedTypeDto);
-        return new ResponseEntity<>(createdFeedTypeDto, HttpStatus.CREATED);
+    public ResponseEntity<FeedType> createFeedType(@RequestBody FeedType feedType) {
+        return new ResponseEntity<>(feedTypeService.createFeedType(feedType), HttpStatus.CREATED);
     }
 }

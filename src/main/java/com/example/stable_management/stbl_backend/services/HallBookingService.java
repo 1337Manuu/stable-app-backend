@@ -1,6 +1,5 @@
 package com.example.stable_management.stbl_backend.services;
 
-import com.example.stable_management.stbl_backend.dtos.hall_booking_dto.HallBookingDto;
 import com.example.stable_management.stbl_backend.entities.HallBooking;
 import com.example.stable_management.stbl_backend.entities.Tenant;
 import com.example.stable_management.stbl_backend.repositories.HallBookingRepository;
@@ -24,36 +23,25 @@ public class HallBookingService {
         this.tenantRepository = tenantRepository;
     }
 
-    public List<HallBookingDto> getAllHallBookings() {
-        return hallBookingRepository.findAll()
-                .stream()
-                .map(HallBookingDto::getDto)
-                .collect(Collectors.toList());
+    public List<HallBooking> getAllHallBookings() {
+        return hallBookingRepository.findAll();
     }
 
-    public HallBookingDto getHallBookingById(Long id) {
-        return hallBookingRepository.findById(id)
-                .map(HallBookingDto::getDto)
-                .orElse(null);
+    public HallBooking getHallBookingById(Long id) {
+        return hallBookingRepository.findById(id).orElse(null);
     }
 
-    public HallBookingDto createHallBooking(HallBookingDto hallBookingDto) {
-        HallBooking hallBooking = new HallBooking();
-        hallBooking.setName(hallBookingDto.name());
-        hallBooking.setStartTime(hallBookingDto.startTime());
-        hallBooking.setEndTime(hallBookingDto.endTime());
-        HallBooking savedHallBooking = hallBookingRepository.save(hallBooking);
-        return HallBookingDto.getDto(savedHallBooking);
+    public HallBooking createHallBooking(HallBooking hallBooking) {
+        return hallBookingRepository.save(hallBooking);
     }
 
-    public HallBookingDto assignHallBookingToTenant(Long hallBookingId, Long tenantId) {
+    public HallBooking assignHallBookingToTenant(Long hallBookingId, Long tenantId) {
         if (hallBookingRepository.findById(hallBookingId).isEmpty() || tenantRepository.findById(tenantId).isEmpty()){
             throw new NoSuchElementException("No HallBooking or Tenant found.");
         }
         HallBooking hallBooking = hallBookingRepository.findById(hallBookingId).get();
         Tenant tenant = tenantRepository.findById(tenantId).get();
         hallBooking.assignTenant(tenant);
-        hallBookingRepository.save(hallBooking);
-        return HallBookingDto.getDto(hallBooking);
+        return hallBookingRepository.save(hallBooking);
     }
 }

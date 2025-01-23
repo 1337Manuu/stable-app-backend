@@ -1,6 +1,5 @@
 package com.example.stable_management.stbl_backend.controller;
 
-import com.example.stable_management.stbl_backend.dtos.stall_dto.StallDto;
 import com.example.stable_management.stbl_backend.entities.Stall;
 import com.example.stable_management.stbl_backend.services.StallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +21,28 @@ public class StallController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StallDto>> getAllStall() {
-        List<StallDto> stallDtoList = stallService.getAllStalls();
-        return new ResponseEntity<>(stallDtoList, HttpStatus.OK);
+    public ResponseEntity<List<Stall>> getAllStall() {
+        return new ResponseEntity<>(stallService.getAllStalls(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StallDto> getStallById(@PathVariable Long id) {
-        StallDto stallDto = stallService.getStallById(id);
-        return new ResponseEntity<>(stallDto, HttpStatus.OK);
+    public ResponseEntity<Stall> getStallById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(stallService.getStallById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<StallDto> createStall(@RequestBody StallDto stall) {
-        StallDto stallDto = stallService.createStall(stall);
-        return new ResponseEntity<>(stallDto, HttpStatus.CREATED);
+    public ResponseEntity<Stall> createStall(@RequestBody Stall stall) {
+        return new ResponseEntity<>(stallService.createStall(stall), HttpStatus.CREATED);
     }
 
     @PutMapping("/{stallId}/horses/{horseId}")
-    public ResponseEntity<StallDto> assignHorseToStall(@PathVariable Long horseId, @PathVariable Long stallId) {
-        StallDto stallDto = stallService.assignHorseToStall(horseId, stallId);
-        return new ResponseEntity<>(stallDto, HttpStatus.OK);
+    public ResponseEntity<Stall> assignHorseToStall(@PathVariable Long horseId, @PathVariable Long stallId) {
+        return new ResponseEntity<>(stallService.assignHorseToStall(horseId, stallId), HttpStatus.OK);
     }
 
     @PutMapping("/{stallId}/stall-locations/{stallLocationId}")
-    public ResponseEntity<StallDto> assignStallToLocation(@PathVariable Long stallId, @PathVariable Long stallLocationId) {
-        StallDto stallDto = stallService.assignStallToStallLocation(stallId, stallLocationId);
-        return new ResponseEntity<>(stallDto, HttpStatus.OK);
+    public ResponseEntity<Stall> assignStallToLocation(@PathVariable Long stallId, @PathVariable Long stallLocationId) {
+        return new ResponseEntity<>(stallService.assignStallToStallLocation(stallId, stallLocationId), HttpStatus.OK);
     }
 }

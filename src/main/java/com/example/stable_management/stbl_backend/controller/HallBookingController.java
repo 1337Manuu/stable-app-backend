@@ -1,6 +1,5 @@
 package com.example.stable_management.stbl_backend.controller;
 
-import com.example.stable_management.stbl_backend.dtos.hall_booking_dto.HallBookingDto;
 import com.example.stable_management.stbl_backend.entities.HallBooking;
 import com.example.stable_management.stbl_backend.services.HallBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +21,22 @@ public class HallBookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HallBookingDto>> getAllHallBookings() {
-        List<HallBookingDto> hallBookings = hallBookingService.getAllHallBookings();
-        return new ResponseEntity<>(hallBookings, HttpStatus.OK);
+    public ResponseEntity<List<HallBooking>> getAllHallBookings() {
+        return new ResponseEntity<>(hallBookingService.getAllHallBookings(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HallBookingDto> getHallBookingById(@PathVariable Long id) {
-        HallBookingDto hallBooking = hallBookingService.getHallBookingById(id);
-        return new ResponseEntity<>(hallBooking, HttpStatus.OK);
+    public ResponseEntity<HallBooking> getHallBookingById(@PathVariable Long id) {
+        return new ResponseEntity<>(hallBookingService.getHallBookingById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<HallBookingDto> createHallBooking(@RequestBody HallBookingDto hallBookingDto) {
-        HallBookingDto createdHallBooking = hallBookingService.createHallBooking(hallBookingDto);
-        return new ResponseEntity<>(createdHallBooking, HttpStatus.CREATED);
+    public ResponseEntity<HallBooking> createHallBooking(@RequestBody HallBooking hallBooking) {
+        return new ResponseEntity<>(hallBookingService.createHallBooking(hallBooking), HttpStatus.CREATED);
     }
 
     @PutMapping("/{hallBookingId}/tenants/{tenantId}")
-    public ResponseEntity<HallBookingDto> assignHallBookingToTenant(@PathVariable Long hallBookingId, @PathVariable Long tenantId) {
-        HallBookingDto assignedHallBooking = hallBookingService.assignHallBookingToTenant(hallBookingId, tenantId);
-        return new ResponseEntity<>(assignedHallBooking, HttpStatus.OK);
+    public ResponseEntity<HallBooking> assignHallBookingToTenant(@PathVariable Long hallBookingId, @PathVariable Long tenantId) {
+        return new ResponseEntity<>(hallBookingService.assignHallBookingToTenant(hallBookingId, tenantId), HttpStatus.OK);
     }
 }

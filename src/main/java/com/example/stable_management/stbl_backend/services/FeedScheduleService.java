@@ -1,6 +1,5 @@
 package com.example.stable_management.stbl_backend.services;
 
-import com.example.stable_management.stbl_backend.dtos.feed_schedule_dto.FeedScheduleDto;
 import com.example.stable_management.stbl_backend.entities.FeedSchedule;
 import com.example.stable_management.stbl_backend.repositories.FeedScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -17,21 +16,16 @@ public class FeedScheduleService {
         this.feedScheduleRepository = feedScheduleRepository;
     }
 
-    public List<FeedScheduleDto> getAllFeedSchedules() {
-        return feedScheduleRepository.findAll().stream()
-                .map(FeedScheduleDto::getDto)
-                .collect(Collectors.toList());
+    public List<FeedSchedule> getAllFeedSchedules() {
+        return feedScheduleRepository.findAll();
     }
 
-    public FeedScheduleDto getFeedScheduleById(Long id) {
-        return FeedScheduleDto.getDto(feedScheduleRepository.findById(id).orElse(null));
+    public FeedSchedule getFeedScheduleById(Long id) {
+        return feedScheduleRepository.findById(id).orElse(null);
     }
 
-    public FeedScheduleDto createFeedSchedule(FeedScheduleDto feedScheduleDto) {
-        FeedSchedule feedSchedule = new FeedSchedule();
-        feedSchedule.setNote(feedScheduleDto.note());
-        feedScheduleRepository.save(feedSchedule);
-        return FeedScheduleDto.getDto(feedSchedule);
+    public FeedSchedule createFeedSchedule(FeedSchedule feedSchedule) {
+        return feedScheduleRepository.save(feedSchedule);
     }
 
 

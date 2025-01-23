@@ -1,6 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
-import com.example.stable_management.stbl_backend.dtos.feed_time_dto.FeedTimeDto;
+import com.example.stable_management.stbl_backend.entities.FeedTime;
 import com.example.stable_management.stbl_backend.services.FeedTimeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,38 +19,36 @@ public class FeedTimeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FeedTimeDto>> getAllFeedTimes() {
-        List<FeedTimeDto> feedTimeDtoList = feedTimeService.getAllFeedTimes();
-        return new ResponseEntity<>(feedTimeDtoList, HttpStatus.OK);
+    public ResponseEntity<List<FeedTime>> getAllFeedTimes() {
+        return new ResponseEntity<>(feedTimeService.getAllFeedTimes(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FeedTimeDto> getFeedTimeById(@PathVariable Long id) {
-        FeedTimeDto feedTimeDto = feedTimeService.getFeedTimeById(id);
-        return new ResponseEntity<>(feedTimeDto, HttpStatus.OK);
+    public ResponseEntity<FeedTime> getFeedTimeById(@PathVariable Long id) {
+        return new ResponseEntity<>(feedTimeService.getFeedTimeById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<FeedTimeDto> createFeedTime(@RequestBody FeedTimeDto feedTimeDto) {
-        FeedTimeDto createdFeedTimeDto = feedTimeService.createFeedTime(feedTimeDto);
-        return new ResponseEntity<>(createdFeedTimeDto, HttpStatus.CREATED);
+    public ResponseEntity<FeedTime> createFeedTime(@RequestBody FeedTime feedTime) {
+        return new ResponseEntity<>(feedTimeService.createFeedTime(feedTime), HttpStatus.CREATED);
     }
 
     @PutMapping("/{feedTimeId}/feed-serving-sizes/{feedServingSizeId}")
-    public ResponseEntity<FeedTimeDto> assignFeedServingSizeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedServingSizeId) {
-        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedServingSizeToFeedTime(feedTimeId, feedServingSizeId);
-        return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
+    public ResponseEntity<FeedTime> assignFeedServingSizeToFeedTime(
+            @PathVariable Long feedTimeId,
+            @PathVariable Long feedServingSizeId) {
+        return new ResponseEntity<>(
+                feedTimeService.assignFeedServingSizeToFeedTime(feedTimeId, feedServingSizeId),
+                HttpStatus.OK);
     }
 
     @PutMapping("/{feedTimeId}/feed-types/{feedTypeId}")
-    public ResponseEntity<FeedTimeDto> assignFeedTypeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedTypeId) {
-        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedTypeToFeedTime(feedTimeId, feedTypeId);
-        return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
+    public ResponseEntity<FeedTime> assignFeedTypeToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedTypeId) {
+        return new ResponseEntity<>(feedTimeService.assignFeedTypeToFeedTime(feedTimeId, feedTypeId), HttpStatus.OK);
     }
 
     @PutMapping("/{feedTimeId}/feed-schedules/{feedScheduleId}")
-    public ResponseEntity<FeedTimeDto> assignFeedScheduleToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedScheduleId) {
-        FeedTimeDto updatedFeedTimeDto = feedTimeService.assignFeedScheduleToFeedTime(feedTimeId, feedScheduleId);
-        return new ResponseEntity<>(updatedFeedTimeDto, HttpStatus.OK);
+    public ResponseEntity<FeedTime> assignFeedScheduleToFeedTime(@PathVariable Long feedTimeId, @PathVariable Long feedScheduleId) {
+        return new ResponseEntity<>(feedTimeService.assignFeedScheduleToFeedTime(feedTimeId, feedScheduleId), HttpStatus.OK);
     }
 }
