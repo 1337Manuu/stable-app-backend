@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
+import com.example.stable_management.stbl_backend.dtos.HorseDto;
 import com.example.stable_management.stbl_backend.entities.Horse;
 import com.example.stable_management.stbl_backend.services.HorseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class HorseController {
     }
 
     @PostMapping
-    public ResponseEntity<Horse> createHorse(@RequestBody Horse horse) {
-        return new ResponseEntity<>(horseService.createHorse(horse), HttpStatus.CREATED);
+    public ResponseEntity<Horse> createHorse(@RequestBody HorseDto horseDto) {
+        return new ResponseEntity<>(horseService.createHorse(horseDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{horseId}/tenants/{tenantId}")

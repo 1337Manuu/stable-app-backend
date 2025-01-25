@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
+import com.example.stable_management.stbl_backend.dtos.StallDto;
 import com.example.stable_management.stbl_backend.entities.Stall;
 import com.example.stable_management.stbl_backend.services.StallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stalls")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StallController {
 
     private final StallService stallService;
@@ -32,8 +34,8 @@ public class StallController {
     }
 
     @PostMapping
-    public ResponseEntity<Stall> createStall(@RequestBody Stall stall) {
-        return new ResponseEntity<>(stallService.createStall(stall), HttpStatus.CREATED);
+    public ResponseEntity<Stall> createStall(@RequestBody StallDto stallDto) {
+        return new ResponseEntity<>(stallService.createStall(stallDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{stallId}/horses/{horseId}")

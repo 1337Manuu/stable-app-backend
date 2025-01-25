@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +20,6 @@ public class StallLocation {
 
     @Setter
     @OneToMany(mappedBy = "stallLocation", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"stallLocation"})
     private Set<Stall> stalls = new HashSet<>();
 }

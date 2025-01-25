@@ -33,4 +33,8 @@ public class TenantService {
     public Tenant getTenantByName(String tenant) {
         return tenantRepository.findByName(tenant);
     }
+
+    public void updateTenant(Tenant tenant) {
+        tenantRepository.save(tenant);
+    }
 }

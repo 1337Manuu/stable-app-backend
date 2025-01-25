@@ -1,9 +1,11 @@
 package com.example.stable_management.stbl_backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
 @Entity
@@ -23,10 +25,13 @@ public class Horse {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tenant_id", referencedColumnName = "id")
     @Setter
+    @JsonIgnoreProperties({"horses", "phone", "hallBookings"})
     private Tenant tenant;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "horse", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stall_id", referencedColumnName = "id")
+    @Setter
+    @JsonIgnoreProperties({"isOccupied", "name", "horse"})
     private Stall stall;
 
     @JsonIgnore
@@ -35,6 +40,10 @@ public class Horse {
 
     public void assignTenant(Tenant tenant) {
         this.tenant = tenant;
+    }
+
+    public void assignStall(Stall stall) {
+        this.stall = stall;
     }
 
     public void assignFeedSchedule(FeedSchedule feedSchedule) {

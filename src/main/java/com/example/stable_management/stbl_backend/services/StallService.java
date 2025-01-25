@@ -1,8 +1,11 @@
 package com.example.stable_management.stbl_backend.services;
 
+import com.example.stable_management.stbl_backend.dtos.HorseDto;
+import com.example.stable_management.stbl_backend.dtos.StallDto;
 import com.example.stable_management.stbl_backend.entities.Horse;
 import com.example.stable_management.stbl_backend.entities.Stall;
 import com.example.stable_management.stbl_backend.entities.StallLocation;
+import com.example.stable_management.stbl_backend.entities.Tenant;
 import com.example.stable_management.stbl_backend.repositories.HorseRepository;
 import com.example.stable_management.stbl_backend.repositories.StallLocationRepository;
 import com.example.stable_management.stbl_backend.repositories.StallRepository;
@@ -19,12 +22,14 @@ public class StallService {
     private final StallRepository stallRepository;
     private final HorseRepository horseRepository;
     private final StallLocationRepository stallLocationRepository;
+    private final StallLocationService stallLocationService;
 
     @Autowired
-    public StallService(StallRepository stallRepository, HorseRepository horseRepository, StallLocationRepository stallLocationRepository) {
+    public StallService(StallRepository stallRepository, HorseRepository horseRepository, StallLocationRepository stallLocationRepository, StallLocationService stallLocationService) {
         this.stallRepository = stallRepository;
         this.horseRepository = horseRepository;
         this.stallLocationRepository = stallLocationRepository;
+        this.stallLocationService = stallLocationService;
     }
 
     public List<Stall> getAllStalls() {
@@ -35,8 +40,17 @@ public class StallService {
         return stallRepository.findById(id).orElse(null);
     }
 
-    public Stall createStall(Stall stall) {
-        return stallRepository.save(stall);
+    public Stall createStall(StallDto stallDto) {
+        Stall newStall = new Stall();
+        StallLocation stallLocation = stallLocationService.getStallLocationById(stallDto.stallLocationId());
+        try {
+            newStall.setStallNumber(stallDto.stallNumber());
+            stallRepository.save(newStall);
+            newStall.assignStallLocation(stallLocation);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return stallRepository.save(newStall);
     }
 
     public Stall assignHorseToStall(Long horseId, Long stallId){
@@ -57,6 +71,10 @@ public class StallService {
         StallLocation stallLocation = stallLocationRepository.findById(stallLocationId).get();
         stall.assignStallLocation(stallLocation);
         return stallRepository.save(stall);
+    }
+
+    public void updateStall(Stall stall) {
+        stallRepository.save(stall);
     }
 }
 

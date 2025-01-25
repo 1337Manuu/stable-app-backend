@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,17 +14,18 @@ public class Stall {
     private Long id;
 
     @Setter
-    private String name;
+    private String stallNumber;
 
     @Setter
     private Boolean isOccupied;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "horse_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "stall", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"stall", "tenant"})
     private Horse horse;
 
     @ManyToOne
     @JoinColumn(name = "stall_location_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("stalls")
     private StallLocation stallLocation;
 
     @PrePersist
