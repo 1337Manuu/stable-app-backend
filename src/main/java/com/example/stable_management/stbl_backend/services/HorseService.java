@@ -5,6 +5,7 @@ import com.example.stable_management.stbl_backend.entities.FeedSchedule;
 import com.example.stable_management.stbl_backend.entities.Horse;
 import com.example.stable_management.stbl_backend.entities.Stall;
 import com.example.stable_management.stbl_backend.entities.Tenant;
+import com.example.stable_management.stbl_backend.exceptions.DtoValidationException;
 import com.example.stable_management.stbl_backend.repositories.FeedScheduleRepository;
 import com.example.stable_management.stbl_backend.repositories.HorseRepository;
 import com.example.stable_management.stbl_backend.repositories.TenantRepository;
@@ -53,6 +54,11 @@ public class HorseService {
             throw new RuntimeException(e);
         }
         return horseRepository.save(newHorse);
+    }
+
+    public void validate(HorseDto horseDto){
+        if (horseDto.name() == null || horseDto.name().isEmpty())
+            throw new DtoValidationException("Name of Horse can not be empty or null");
     }
 
     public Horse assignHorseToTenant(Long tenantId, Long horseId) {

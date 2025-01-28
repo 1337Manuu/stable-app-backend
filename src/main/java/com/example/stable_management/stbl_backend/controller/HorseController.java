@@ -34,6 +34,7 @@ public class HorseController {
 
     @PostMapping
     public ResponseEntity<Horse> createHorse(@RequestBody HorseDto horseDto) {
+        horseService.validate(horseDto);
         return new ResponseEntity<>(horseService.createHorse(horseDto), HttpStatus.CREATED);
     }
 
