@@ -18,7 +18,7 @@ public class Tenant {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tenant", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"tenant", "note", "stall", "feedSchedule"})
     private Set<Horse> horses = new HashSet<>();
 
@@ -31,4 +31,9 @@ public class Tenant {
 
     @Setter
     private String phone = "N.A.";
+
+    public void addHorse(Horse horse) {
+        horses.add(horse);
+        horse.setTenant(this);
+    }
 }

@@ -21,11 +21,13 @@ public class Stall {
 
     @OneToOne(mappedBy = "stall", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"stall", "tenant"})
+    @Setter
     private Horse horse;
 
     @ManyToOne
     @JoinColumn(name = "stall_location_id", referencedColumnName = "id")
     @JsonIgnoreProperties("stalls")
+    @Setter
     private StallLocation stallLocation;
 
     @PrePersist
@@ -36,9 +38,14 @@ public class Stall {
 
     public void assignHorse(Horse horse) {
         this.horse = horse;
+        if (horse.getStall() != this) {
+            horse.setStall(this);
+        }
     }
 
     public void assignStallLocation(StallLocation stallLocation) {
         this.stallLocation = stallLocation;
+        stallLocation.addStall(this);
     }
+
 }

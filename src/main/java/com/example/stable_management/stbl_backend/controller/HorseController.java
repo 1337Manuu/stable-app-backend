@@ -2,7 +2,7 @@ package com.example.stable_management.stbl_backend.controller;
 
 import com.example.stable_management.stbl_backend.dtos.HorseDto;
 import com.example.stable_management.stbl_backend.entities.Horse;
-import com.example.stable_management.stbl_backend.services.HorseService;
+import com.example.stable_management.stbl_backend.services.interfaces.HorseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

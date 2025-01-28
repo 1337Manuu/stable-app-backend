@@ -1,7 +1,7 @@
 package com.example.stable_management.stbl_backend.controller;
 
 import com.example.stable_management.stbl_backend.entities.Tenant;
-import com.example.stable_management.stbl_backend.services.TenantService;
+import com.example.stable_management.stbl_backend.services.interfaces.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

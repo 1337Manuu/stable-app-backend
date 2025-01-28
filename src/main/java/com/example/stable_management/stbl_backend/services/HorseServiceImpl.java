@@ -9,15 +9,17 @@ import com.example.stable_management.stbl_backend.exceptions.DtoValidationExcept
 import com.example.stable_management.stbl_backend.repositories.FeedScheduleRepository;
 import com.example.stable_management.stbl_backend.repositories.HorseRepository;
 import com.example.stable_management.stbl_backend.repositories.TenantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.stable_management.stbl_backend.services.interfaces.HorseService;
+import com.example.stable_management.stbl_backend.services.interfaces.StallService;
+import com.example.stable_management.stbl_backend.services.interfaces.TenantService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
-public class HorseService {
+public class HorseServiceImpl implements HorseService {
 
     private final HorseRepository horseRepository;
     private final TenantRepository tenantRepository;
@@ -25,7 +27,7 @@ public class HorseService {
     private final TenantService tenantService;
     private final StallService stallService;
 
-    public HorseService(HorseRepository horseRepository, TenantRepository tenantRepository, FeedScheduleRepository feedScheduleRepository, TenantService tenantService, StallService stallService) {
+    public HorseServiceImpl(HorseRepository horseRepository, TenantRepository tenantRepository, FeedScheduleRepository feedScheduleRepository, TenantService tenantService, @Lazy StallService stallService) {
         this.horseRepository = horseRepository;
         this.tenantRepository = tenantRepository;
         this.feedScheduleRepository = feedScheduleRepository;
@@ -33,34 +35,36 @@ public class HorseService {
         this.stallService = stallService;
     }
 
+    @Override
     public List<Horse> getAllHorses() {
         return horseRepository.findAll();
     }
 
+    @Override
     public Horse getHorseById(Long id) {
         return horseRepository.findById(id).orElse(null);
     }
 
+    @Override
     public Horse createHorse(HorseDto horseDto) {
-        Horse newHorse = new Horse();
         Tenant tenant = tenantService.getTenantById(horseDto.tenantId());
         Stall stall = stallService.getStallById(horseDto.stallId());
-        try {
-            newHorse.setName(horseDto.name());
-            horseRepository.save(newHorse);
-            newHorse.assignTenant(tenant);
-            newHorse.assignStall(stall);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+        Horse newHorse = new Horse();
+        newHorse.setName(horseDto.name());
+        newHorse.assignTenant(tenant);
+        newHorse.assignStall(stall);
+
         return horseRepository.save(newHorse);
     }
 
-    public void validate(HorseDto horseDto){
+    @Override
+    public void validate(HorseDto horseDto) {
         if (horseDto.name() == null || horseDto.name().isEmpty())
             throw new DtoValidationException("Name of Horse can not be empty or null");
     }
 
+    @Override
     public Horse assignHorseToTenant(Long tenantId, Long horseId) {
         if (horseRepository.findById(horseId).isEmpty() || tenantRepository.findById(tenantId).isEmpty()) {
             throw new NoSuchElementException("Horse or Tenant not found");
@@ -71,6 +75,7 @@ public class HorseService {
         return horseRepository.save(horse);
     }
 
+    @Override
     public Horse assignHorseToStall(Long stallId, Long horseId) {
         if (horseRepository.findById(horseId).isEmpty() || tenantRepository.findById(stallId).isEmpty()) {
             throw new NoSuchElementException("Horse or Stall not found");
@@ -81,6 +86,7 @@ public class HorseService {
         return horseRepository.save(horse);
     }
 
+    @Override
     public Horse assignFeedScheduleToHorse(Long horseId, Long feedScheduleId) {
         if (horseRepository.findById(horseId).isEmpty() || feedScheduleRepository.findById(feedScheduleId).isEmpty()) {
             throw new NoSuchElementException("Horse or Feed Schedule not found");

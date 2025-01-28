@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -19,7 +21,12 @@ public class StallLocation {
     private String name;
 
     @Setter
-    @OneToMany(mappedBy = "stallLocation", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "stallLocation", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"stallLocation"})
-    private Set<Stall> stalls = new HashSet<>();
+    private List<Stall> stalls = new ArrayList<>();
+
+    public void addStall(Stall stall) {
+        stalls.add(stall);
+        stall.setStallLocation(this);
+    }
 }

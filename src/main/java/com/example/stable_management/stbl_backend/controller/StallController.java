@@ -2,7 +2,7 @@ package com.example.stable_management.stbl_backend.controller;
 
 import com.example.stable_management.stbl_backend.dtos.StallDto;
 import com.example.stable_management.stbl_backend.entities.Stall;
-import com.example.stable_management.stbl_backend.services.StallService;
+import com.example.stable_management.stbl_backend.services.interfaces.StallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

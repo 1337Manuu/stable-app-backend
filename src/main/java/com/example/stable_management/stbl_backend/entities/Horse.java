@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
 @Entity
@@ -22,13 +21,13 @@ public class Horse {
     private String note;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "tenant_id", referencedColumnName = "id")
     @Setter
     @JsonIgnoreProperties({"horses", "phone", "hallBookings"})
     private Tenant tenant;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "stall_id", referencedColumnName = "id")
     @Setter
     @JsonIgnoreProperties({"isOccupied", "name", "horse"})
@@ -40,10 +39,14 @@ public class Horse {
 
     public void assignTenant(Tenant tenant) {
         this.tenant = tenant;
+        tenant.addHorse(this);
     }
 
     public void assignStall(Stall stall) {
         this.stall = stall;
+        if (stall.getHorse() != this) {
+            stall.setHorse(this);
+        }
     }
 
     public void assignFeedSchedule(FeedSchedule feedSchedule) {
