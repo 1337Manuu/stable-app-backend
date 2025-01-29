@@ -1,4 +1,4 @@
-package com.example.stable_management.stbl_backend.services;
+package com.example.stable_management.stbl_backend.services.implementations;
 
 import com.example.stable_management.stbl_backend.dtos.StallDto;
 import com.example.stable_management.stbl_backend.entities.Horse;
@@ -7,6 +7,7 @@ import com.example.stable_management.stbl_backend.entities.StallLocation;
 import com.example.stable_management.stbl_backend.exceptions.ResourceNotFoundException;
 import com.example.stable_management.stbl_backend.repositories.StallRepository;
 import com.example.stable_management.stbl_backend.services.interfaces.HorseService;
+import com.example.stable_management.stbl_backend.services.interfaces.StallLocationService;
 import com.example.stable_management.stbl_backend.services.interfaces.StallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

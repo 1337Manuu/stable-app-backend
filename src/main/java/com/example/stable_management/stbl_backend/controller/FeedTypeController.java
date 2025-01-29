@@ -1,7 +1,7 @@
 package com.example.stable_management.stbl_backend.controller;
 
 import com.example.stable_management.stbl_backend.entities.FeedType;
-import com.example.stable_management.stbl_backend.services.FeedTypeService;
+import com.example.stable_management.stbl_backend.services.interfaces.FeedTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

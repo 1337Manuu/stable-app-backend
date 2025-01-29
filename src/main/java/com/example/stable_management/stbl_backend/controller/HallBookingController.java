@@ -1,7 +1,7 @@
 package com.example.stable_management.stbl_backend.controller;
 
 import com.example.stable_management.stbl_backend.entities.HallBooking;
-import com.example.stable_management.stbl_backend.services.HallBookingService;
+import com.example.stable_management.stbl_backend.services.interfaces.HallBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

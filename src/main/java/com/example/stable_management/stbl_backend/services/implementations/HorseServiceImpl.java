@@ -1,4 +1,4 @@
-package com.example.stable_management.stbl_backend.services;
+package com.example.stable_management.stbl_backend.services.implementations;
 
 import com.example.stable_management.stbl_backend.dtos.HorseDto;
 import com.example.stable_management.stbl_backend.entities.FeedSchedule;
