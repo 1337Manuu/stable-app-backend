@@ -14,4 +14,6 @@ public interface TenantService {
     Tenant getTenantByName(String tenant);
 
     void updateTenant(Tenant tenant);
+
+    void validate(Tenant tenant);
 }

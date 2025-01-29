@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
+import com.example.stable_management.stbl_backend.dtos.StallLocationDto;
 import com.example.stable_management.stbl_backend.entities.StallLocation;
 import com.example.stable_management.stbl_backend.services.interfaces.StallLocationService;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,8 @@ public class StallLocationController {
     }
 
     @PostMapping
-    public ResponseEntity<StallLocation> createStallLocation(@RequestBody StallLocation stallLocation) {
-        return new ResponseEntity<>(stallLocationService.createStallLocation(stallLocation), HttpStatus.CREATED);
+    public ResponseEntity<StallLocation> createStallLocation(@RequestBody StallLocationDto stallLocationDto) {
+        return new ResponseEntity<>(stallLocationService.createStallLocation(stallLocationDto), HttpStatus.CREATED);
     }
 
 }

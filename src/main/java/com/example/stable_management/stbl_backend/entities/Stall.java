@@ -14,7 +14,7 @@ public class Stall {
     private Long id;
 
     @Setter
-    private String stallNumber;
+    private Integer stallNumber;
 
     @Setter
     private Boolean isOccupied;

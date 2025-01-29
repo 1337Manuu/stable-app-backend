@@ -1,7 +1,7 @@
 package com.example.stable_management.stbl_backend.dtos;
 
 public record StallDto(
-        String stallNumber,
+        Integer stallNumber,
         Long stallLocationId
 ) {
 }

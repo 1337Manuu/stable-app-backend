@@ -10,6 +10,7 @@ import com.example.stable_management.stbl_backend.services.interfaces.HorseServi
 import com.example.stable_management.stbl_backend.services.interfaces.StallLocationService;
 import com.example.stable_management.stbl_backend.services.interfaces.StallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class StallServiceImpl implements StallService {
     private final HorseService horseService;
 
     @Autowired
-    public StallServiceImpl(StallRepository stallRepository, StallLocationService stallLocationService, HorseService horseService) {
+    public StallServiceImpl(StallRepository stallRepository, @Lazy StallLocationService stallLocationService, HorseService horseService) {
         this.stallRepository = stallRepository;
         this.stallLocationService = stallLocationService;
         this.horseService = horseService;
