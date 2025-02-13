@@ -9,5 +9,5 @@ public interface FeedScheduleService {
 
     FeedSchedule getFeedScheduleById(Long id);
 
-    FeedSchedule createFeedSchedule(FeedSchedule feedSchedule);
+    FeedSchedule createFeedSchedule(Long horseId);
 }

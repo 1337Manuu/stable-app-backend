@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
+import com.example.stable_management.stbl_backend.dtos.FeedTypeDto;
 import com.example.stable_management.stbl_backend.entities.FeedType;
 import com.example.stable_management.stbl_backend.services.interfaces.FeedTypeService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,13 @@ public class FeedTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedType> createFeedType(@RequestBody FeedType feedType) {
-        return new ResponseEntity<>(feedTypeService.createFeedType(feedType), HttpStatus.CREATED);
+    public ResponseEntity<FeedType> createFeedType(@RequestBody FeedTypeDto feedTypeDto) {
+        return new ResponseEntity<>(feedTypeService.createFeedType(feedTypeDto), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteFeedType(@PathVariable Long id) {
+        feedTypeService.deleteFeedTypeById(id);
+        return new ResponseEntity<>("FeedType deleted.", HttpStatus.OK);
     }
 }

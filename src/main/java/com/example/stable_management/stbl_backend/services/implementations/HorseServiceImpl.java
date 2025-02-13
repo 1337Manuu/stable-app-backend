@@ -9,6 +9,7 @@ import com.example.stable_management.stbl_backend.exceptions.DtoValidationExcept
 import com.example.stable_management.stbl_backend.repositories.FeedScheduleRepository;
 import com.example.stable_management.stbl_backend.repositories.HorseRepository;
 import com.example.stable_management.stbl_backend.repositories.TenantRepository;
+import com.example.stable_management.stbl_backend.services.interfaces.FeedScheduleService;
 import com.example.stable_management.stbl_backend.services.interfaces.HorseService;
 import com.example.stable_management.stbl_backend.services.interfaces.StallService;
 import com.example.stable_management.stbl_backend.services.interfaces.TenantService;
@@ -22,17 +23,17 @@ import java.util.NoSuchElementException;
 public class HorseServiceImpl implements HorseService {
 
     private final HorseRepository horseRepository;
-    private final TenantRepository tenantRepository;
-    private final FeedScheduleRepository feedScheduleRepository;
+    private TenantRepository tenantRepository;
+    private FeedScheduleRepository feedScheduleRepository;
     private final TenantService tenantService;
     private final StallService stallService;
+    private final FeedScheduleService feedScheduleService;
 
-    public HorseServiceImpl(HorseRepository horseRepository, TenantRepository tenantRepository, FeedScheduleRepository feedScheduleRepository, TenantService tenantService, @Lazy StallService stallService) {
+    public HorseServiceImpl(HorseRepository horseRepository, TenantService tenantService, StallService stallService, FeedScheduleService feedScheduleService) {
         this.horseRepository = horseRepository;
-        this.tenantRepository = tenantRepository;
-        this.feedScheduleRepository = feedScheduleRepository;
         this.tenantService = tenantService;
         this.stallService = stallService;
+        this.feedScheduleService = feedScheduleService;
     }
 
     @Override
@@ -54,6 +55,8 @@ public class HorseServiceImpl implements HorseService {
         newHorse.setName(horseDto.name());
         newHorse.assignTenant(tenant);
         newHorse.assignStall(stall);
+        horseRepository.save(newHorse);
+        newHorse.assignFeedSchedule(feedScheduleService.createFeedSchedule(newHorse.getId()));
 
         return horseRepository.save(newHorse);
     }

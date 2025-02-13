@@ -33,7 +33,7 @@ public class Horse {
     @JsonIgnoreProperties({"isOccupied", "name", "horse"})
     private Stall stall;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"note", "horse", "feedings"})
     @OneToOne(mappedBy = "horse", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private FeedSchedule feedSchedule;
 
@@ -53,7 +53,7 @@ public class Horse {
         this.feedSchedule = feedSchedule;
 
         if (feedSchedule.getHorse() != this) {
-            feedSchedule.setHorse(this);
+            feedSchedule.assignHorse(this);
         }
     }
 }

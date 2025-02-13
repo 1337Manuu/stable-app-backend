@@ -23,7 +23,7 @@ public class StallServiceImpl implements StallService {
     private final HorseService horseService;
 
     @Autowired
-    public StallServiceImpl(StallRepository stallRepository, @Lazy StallLocationService stallLocationService, HorseService horseService) {
+    public StallServiceImpl(StallRepository stallRepository, @Lazy StallLocationService stallLocationService, @Lazy HorseService horseService) {
         this.stallRepository = stallRepository;
         this.stallLocationService = stallLocationService;
         this.horseService = horseService;

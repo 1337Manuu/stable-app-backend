@@ -29,7 +29,7 @@ public class FeedScheduleController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedSchedule> createFeedSchedule(@RequestBody FeedSchedule feedSchedule) {
-        return new ResponseEntity<>(feedScheduleService.createFeedSchedule(feedSchedule), HttpStatus.CREATED);
+    public ResponseEntity<FeedSchedule> createFeedSchedule(@RequestBody Long horseId) {
+        return new ResponseEntity<>(feedScheduleService.createFeedSchedule(horseId), HttpStatus.CREATED);
     }
 }

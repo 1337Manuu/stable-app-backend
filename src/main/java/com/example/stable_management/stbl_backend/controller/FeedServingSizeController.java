@@ -1,5 +1,6 @@
 package com.example.stable_management.stbl_backend.controller;
 
+import com.example.stable_management.stbl_backend.dtos.FeedServingSizeDto;
 import com.example.stable_management.stbl_backend.entities.FeedServingSize;
 import com.example.stable_management.stbl_backend.services.interfaces.FeedServingSizeService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class FeedServingSizeController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedServingSize> createFeedServingSize(@RequestBody FeedServingSize feedServingSize) {
-        return new ResponseEntity<>(feedServingSizeService.createFeedServingSize(feedServingSize), HttpStatus.CREATED);
+    public ResponseEntity<FeedServingSize> createFeedServingSize(@RequestBody FeedServingSizeDto feedServingSizeDto) {
+        return new ResponseEntity<>(feedServingSizeService.createFeedServingSize(feedServingSizeDto), HttpStatus.CREATED);
     }
 }

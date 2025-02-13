@@ -1,11 +1,13 @@
 package com.example.stable_management.stbl_backend.services.implementations;
 
+import com.example.stable_management.stbl_backend.dtos.FeedServingSizeDto;
 import com.example.stable_management.stbl_backend.entities.FeedServingSize;
 import com.example.stable_management.stbl_backend.repositories.FeedServingSizeRepository;
 import com.example.stable_management.stbl_backend.services.interfaces.FeedServingSizeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FeedServingSizeServiceImpl implements FeedServingSizeService {
@@ -27,7 +29,16 @@ public class FeedServingSizeServiceImpl implements FeedServingSizeService {
     }
 
     @Override
-    public FeedServingSize createFeedServingSize(FeedServingSize feedServingSize) {
+    public FeedServingSize createFeedServingSize(FeedServingSizeDto feedServingSizeDto) {
+        FeedServingSize feedServingSize = new FeedServingSize();
+        feedServingSize.setName(feedServingSizeDto.name());
         return feedServingSizeRepository.save(feedServingSize);
     }
+
+    @Override
+    public Optional<FeedServingSize> getFeedServingSizeByName(String name) {
+        return feedServingSizeRepository.findByName(name);
+    }
+
+
 }
