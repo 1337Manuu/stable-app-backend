@@ -26,12 +26,12 @@ public class Feeding {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feed_serving_size_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"name", "feedings"})
+    @JsonIgnoreProperties({"feedings"})
     private FeedServingSize feedServingSize;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feed_type_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"name", "feedings"})
+    @JsonIgnoreProperties({"feedings"})
     private FeedType feedType;
 
     public void assignFeedServingSize(FeedServingSize feedServingSize) {

@@ -25,9 +25,8 @@ public class FeedSchedule {
     private Horse horse;
 
     @Setter
-    @JsonIgnore
     @OneToMany(mappedBy = "feedSchedule", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"timeExpression", "feedSchedule", "feedServingSize", "feedType"})
+    @JsonIgnoreProperties({"feedSchedule"})
     private List<Feeding> feedings = new ArrayList<>();
 
     public void assignHorse(Horse horse) {

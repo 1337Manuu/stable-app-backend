@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/feed-schedules")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FeedScheduleController {
 
     private final FeedScheduleService feedScheduleService;

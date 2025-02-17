@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/feed-serving-sizes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FeedServingSizeController {
 
     private final FeedServingSizeService feedServingSizeService;

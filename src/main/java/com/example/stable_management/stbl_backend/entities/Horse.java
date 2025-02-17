@@ -33,7 +33,7 @@ public class Horse {
     @JsonIgnoreProperties({"isOccupied", "name", "horse"})
     private Stall stall;
 
-    @JsonIgnoreProperties({"note", "horse", "feedings"})
+    @JsonIgnoreProperties({"note", "horse"})
     @OneToOne(mappedBy = "horse", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private FeedSchedule feedSchedule;
 
