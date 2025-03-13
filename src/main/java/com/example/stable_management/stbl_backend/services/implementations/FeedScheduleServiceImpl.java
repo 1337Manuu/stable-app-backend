@@ -59,7 +59,7 @@ public class FeedScheduleServiceImpl implements FeedScheduleService {
                     feedSchedule.getId(),
                     feedType.getId(),
                     feedServingSize.getId()));
-            feedSchedule.addFeeding(feeding);
+            feeding.assignFeedSchedule(feedSchedule);
         }
 
         return feedScheduleRepository.save(feedSchedule);
